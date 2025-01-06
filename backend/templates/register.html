@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Cabin:ital,wght@0,400..700;1,400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Jacques+Francois&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <main class="main">
+        <form action="/api/session/register" method="post" class="--card form --gap-16">
+            <h3 class="--mini-title">Crear una cuenta</h3>
+            <p class="--mini-desc --text-center">Cree una cuenta para entrar a la plataforma</p>
+            <input class="--inputs" type="text" name="username" placeholder="Nombre de usuario" required>
+            <input class="--inputs" type="text" name="email" placeholder="Correo electrónico" required>
+            <input class="--inputs" type="password" name="password" placeholder="Contraseña" required>
+            <button type="submit" class="--button --micro-desc --bold">Registrarme</button>
+        </form>
+     </main>
+
+     <script src="{{ url_for('static', filename='js/form.js') }}"></script>
+</body>
+</html>

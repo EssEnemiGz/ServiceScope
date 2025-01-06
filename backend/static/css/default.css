@@ -1,0 +1,160 @@
+:root{
+    --white: #fff;
+    --soft-blue: #0E9CFF;
+    --light-gray: #E8EAED;
+    --medium-gray: #333333;
+    --soft-gray: #CCCCCC;
+    --deep-black: #181818;
+    --blue-black: #111827;
+    --blue-black-2: #1F2937;
+    --red: #E1554B;
+    --black: #000;
+
+    /* BACKGROUNDS */
+    --background-blue: #111827;
+
+    /* BORDERS */
+    --border-6: 6px;
+    --border-30: 30px;
+
+    /* FONT SIZES */
+    --fs-24: 24px;
+    --fs-16: 16px;
+
+    /* FONT STYLES */
+    --bold: 600;
+    --regular: 500;
+}
+
+/* REMOVING DEFAULT STYLES */
+*, *::after, *::before{
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+
+    cursor: default;
+}
+
+html{
+    font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+/* DEFAULT CLASSES */
+.--background-blue{
+    background-color: var(--background-blue);
+}
+
+.--inline-container{
+    display: flex;
+}
+
+.--block-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.--centered{
+    justify-content: center;
+    align-items: center;
+}
+
+.--bold{
+    font-weight: var(--bold);
+}
+
+.--regular{
+    font-weight: var(--regular);
+}
+
+.--fs-24{
+    font-size: 24px;
+}
+
+.--fs-16{
+    font-size: 16px;
+}
+
+.--fc-white{
+    color: var(--white);
+}
+
+.--card{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border-radius: var(--border-6);
+    border: 1px solid var(--white);
+    gap: 10px;
+}
+
+.--gap-6{
+    gap: 6px;
+}
+
+.--gap-12{
+    gap: 12px;
+}
+
+.--space-between{
+    justify-content: space-between;
+}
+
+.--bar{
+    width: 100%;
+    height: 20px;
+    background-color: var(--white);
+    border-radius: var(--border-30);
+}
+
+.--bar-fill{
+    height: 20px;
+    background-color: var(--deep-black);
+    border-radius: var(--border-30);
+}
+
+.--grid-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.--padding-inline-24{
+    padding-inline: 24px;
+}
+
+.--padding-block-24{
+    padding-block: 24px;
+}
+
+.--button, .--button-red{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-block: 12px;
+    padding-inline: 32px;
+    border-radius: var(--border-6);
+    gap: 16px;
+
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.--button-red{
+    background-color: var(--red);
+    color: var(--white);
+}
+
+.--button:hover, .--button-red:hover{
+    cursor: pointer;
+}
+
+.--clickable:hover{
+    cursor: pointer;
+}
+
+.--no-clickable:hover{
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    cursor: default;
+}

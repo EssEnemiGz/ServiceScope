@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/default.css') }}">
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900" rel="stylesheet">
+
+    <!-- GOOGLE ICONS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <!-- CHART.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+<body class="--background-blue">
+    <main class="--block-container --padding-inline-24 --padding-block-24 --fc-white --gap-12">
+        <div class="--grid-container --gap-12">
+            <div class="--card">
+                <div class="--inline-container --space-between --centered">
+                    <h3 class="--fs-24 --bold --no-clickable">CPU Usage</h3>
+                    <p class="--fs-16 --bold --no-clickable">68.00%</p>
+                </div>
+                <canvas id="cpuUsageChart"></canvas>
+            </div>
+            <div class="--card">
+                <div class="--inline-container --space-between --centered">
+                    <h3 class="--fs-24 --bold --no-clickable">RAM Usage</h3>
+                    <p class="--fs-16 --bold --no-clickable">8.70GB</p>
+                </div>
+                <canvas id="ramUsageChart"></canvas>
+            </div>
+            <div class="--card">
+                <div class="--inline-container --space-between --centered">
+                    <h3 class="--fs-24 --bold --no-clickable">Disk Space</h3>
+                    <p class="--fs-16 --bold --no-clickable">68.00%</p>
+                </div>
+                <div class="--bar">
+                    <div class="--bar-fill" style="width: 68%;"></div>
+                </div>
+                <div class="--inline-container --space-between">
+                    <p class="--font-16 --regular">685GB used</p>
+                    <p class="--font-16 --regular">1000GB total</p>
+                </div>
+            </div>
+            <div class="--card">
+                <div class="--inline-container --space-between --centered">
+                    <h3 class="--fs-24 --bold --no-clickable">RAM Usage</h3>
+                    <p class="--fs-16 --bold --no-clickable">8.70GB</p>
+                </div>
+                <canvas id="networkActivityChart"></canvas>
+            </div>
+        </div>
+        <div class="--card">
+            <h3 class="--fs-24 --bold --no-clickable">Quick Actions</h3>
+            <div class="--inline-container --space-between">
+                <div class="--button-red">
+                    <span class="material-symbols-outlined">
+                        power_settings_new
+                    </span>
+                    Shutdown
+                </div>
+                <div class="--button">
+                    <span class="material-symbols-outlined">
+                        stop_circle
+                    </span>
+                    Stop Operations
+                </div>
+                <div class="--button-red">
+                    <span class="material-symbols-outlined">
+                        cancel
+                    </span>
+                    Kill Daemons
+                </div>
+                <div class="--button">
+                    <span class="material-symbols-outlined">
+                        restart_alt
+                    </span>
+                    Restart Services
+                </div>
+                <div class="--button">
+                    <span class="material-symbols-outlined">
+                        edit
+                    </span>
+                    Edit Actions
+                </div>
+                <div class="--button">
+                    <span class="material-symbols-outlined">
+                        cloud
+                    </span>
+                    SSH Connection
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

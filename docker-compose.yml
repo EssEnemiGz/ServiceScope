@@ -1,0 +1,52 @@
+# Docker Compose configuration version
+version: '1.0'
+
+services:
+  # PostgreSQL Database Service
+  postgres:
+    image: postgres:latest
+    container_name: serviceScope_db
+    environment:
+      POSTGRES_USER: admin@localhost.com
+      # Using environment variable for password security
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: serviceScope_db
+    volumes:
+      # Change the order of volumes - init.sql should be first
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db_data:/var/lib/postgresql/data
+    ports:
+      # Map host port 5433 to container port 5432
+      - "5433:5432"
+    restart: unless-stopped
+    # Add healthcheck to ensure database is ready
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin@localhost.com -d serviceScope_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Flask Backend Service
+  flask:
+    build: 
+      context: ./backend
+      dockerfile: DockerFile
+    container_name: serviceScope_server
+    environment:
+      FLASK_APP: 'app.py'
+      FLASK_ENV: 'development'
+      DB_HOST: 'postgres'
+      POSTGRES_DB: 'serviceScope_db'
+      POSTGRES_USER: 'admin@localhost.com'
+      DB_PASSWORD: ${DB_PASSWORD}
+      SECRET_KEY: ${SECRET_KEY}
+    ports:
+      # Map host port 5555 to container port 5000
+      - "5555:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy  # Wait for postgres to be healthy
+    restart: unless-stopped
+    volumes:
+      # Mount application code for development
+      - ./backend:/app

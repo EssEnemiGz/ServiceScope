@@ -1,0 +1,16 @@
+{
+    "routes": [
+        {
+            "url": "http://127.0.0.1:5555",
+            "method": "GET",
+            "headers": {
+                "Authorization": "Bearer token123"
+            }
+        },
+        {
+            "url": "http://127.0.0.1:5555/dashboard",
+            "method": "GET"
+        }
+    ],
+    "user_id": 0
+}
