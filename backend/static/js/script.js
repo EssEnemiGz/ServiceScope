@@ -91,7 +91,7 @@ const ramUsageConfig = {
           color: '#b0b0c3'
         },
         beginAtZero: true,
-        max: 16
+        max: 100
       }
     }
   }
@@ -151,7 +151,7 @@ const networkActivityConfig = {
           color: '#b0b0c3'
         },
         beginAtZero: true,
-        max: 10
+        max: 10000
       }
     }
   }
