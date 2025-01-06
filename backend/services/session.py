@@ -31,6 +31,7 @@ def login():
     user_id = session_manager.get_user_id(email)
     session['id'] = user_id
     session['email'] = email
+    session.permanent = True
     
     return jsonify({"redirect":"/dashboard"})
     
@@ -61,5 +62,6 @@ def register():
     user_id = session_manager.get_user_id(email)
     session['id'] = user_id
     session['email'] = email
+    session.permanent = True
     
     return jsonify({"redirect":"/dashboard"})
