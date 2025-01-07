@@ -22,25 +22,64 @@ def realtime_data():
     
     cursor = db.cursor()
     try:
-        cursor.execute("SELECT cpu_usage, ram_percentage, ram_gb, created_at FROM system_logs WHERE user_id = %s;", (user_id,))
+        # Obtener los datos de uso de CPU, RAM y tiempo
+        cursor.execute("""
+            SELECT cpu_usage, ram_percentage, ram_gb, created_at, network_upload, network_download, disk_total
+            FROM system_logs 
+            WHERE user_id = %s;
+        """, (user_id,))
+        system_logs = cursor.fetchall()
+
+        # Obtener el uso de disco más reciente
+        cursor.execute("""
+            SELECT disk_usage, created_at 
+            FROM system_logs 
+            WHERE user_id = %s 
+            ORDER BY created_at DESC 
+            LIMIT 1;
+        """, (user_id,))
+        disk_usage = cursor.fetchone()
+
     except psycopg2.errors.InFailedSqlTransaction:
         db = db_manager.get_db_connection()
         cursor = db.cursor()
-        cursor.execute("SELECT cpu_usage, ram_percentage, ram_gb, created_at FROM system_logs WHERE user_id = %s;", (user_id,))
-        
-    result = cursor.fetchall()
 
-    if not result:
+        cursor.execute("""
+            SELECT cpu_usage, ram_percentage, ram_gb, created_at, network_upload, network_download, disk_total 
+            FROM system_logs 
+            WHERE user_id = %s;
+        """, (user_id,))
+        system_logs = cursor.fetchall()
+
+        cursor.execute("""
+            SELECT disk_usage, created_at 
+            FROM system_logs 
+            WHERE user_id = %s 
+            ORDER BY created_at DESC 
+            LIMIT 1;
+        """, (user_id,))
+        disk_usage = cursor.fetchone()
+
+    # Procesar los datos de system_logs
+    if not system_logs:
         return jsonify([])
-    
+
     data = [
         {
             "cpu_usage": row[0],
             "ram_percentage": row[1],
             "ram_gb": row[2],
-            "created_at": row[3].strftime('%d %b %Y %H:%M')
+            "created_at": row[3].strftime('%d %b %Y %H:%M'),
+            "network_upload": row[4],
+            "network_download": row[5],
+            "disk_total": row[6]
         }
-        for row in result
+        for row in system_logs
     ]
+
+    if disk_usage:
+        data[0].setdefault("disk_usage", disk_usage[0])
+    else: 
+        data[0].setdefault("disk_usage", 0)
     
     return jsonify(data)

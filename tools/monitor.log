@@ -1,9 +1,0 @@
-2024-12-30 22:58:24,400 - INFO - El daemon ha iniciado.
-2024-12-30 22:58:24,424 - INFO - EJECUTANDO
-2024-12-30 22:58:25,426 - INFO - {'routes': [{'service': 'http://127.0.0.1:5555', 'response_time': 0.016158, 'status_code': 200}, {'service': 'http://127.0.0.1:5555/dashboard', 'response_time': 0.003716, 'status_code': 200}], 'cpu': 26.1, 'ram_percentege': 83.8, 'ram_gb': '3.02'}
-2024-12-30 22:58:35,452 - INFO - EJECUTANDO
-2024-12-30 22:58:36,455 - INFO - {'routes': [{'service': 'http://127.0.0.1:5555', 'response_time': 0.013181, 'status_code': 200}, {'service': 'http://127.0.0.1:5555/dashboard', 'response_time': 0.00359, 'status_code': 200}], 'cpu': 8.4, 'ram_percentege': 81.0, 'ram_gb': '2.96'}
-2024-12-30 22:58:46,475 - INFO - EJECUTANDO
-2024-12-30 22:58:47,477 - INFO - {'routes': [{'service': 'http://127.0.0.1:5555', 'response_time': 0.008072, 'status_code': 200}, {'service': 'http://127.0.0.1:5555/dashboard', 'response_time': 0.003465, 'status_code': 200}], 'cpu': 6.3, 'ram_percentege': 81.0, 'ram_gb': '3.07'}
-2024-12-30 22:58:57,499 - INFO - EJECUTANDO
-2024-12-30 22:58:58,501 - INFO - {'routes': [{'service': 'http://127.0.0.1:5555', 'response_time': 0.010534, 'status_code': 200}, {'service': 'http://127.0.0.1:5555/dashboard', 'response_time': 0.001786, 'status_code': 200}], 'cpu': 14.7, 'ram_percentege': 83.0, 'ram_gb': '2.94'}

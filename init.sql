@@ -30,7 +30,10 @@ CREATE TABLE system_logs (
     cpu_usage FLOAT NOT NULL,
     ram_percentage FLOAT NOT NULL,
     ram_gb FLOAT NOT NULL,
-    disk_usage FLOAT NOT NULL,
+    disk_usage FLOAT NOT NULL, -- In GB
+    disk_total FLOAT NOT NULL,
+    network_upload FLOAT NOT NULL,
+    network_download FLOAT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );

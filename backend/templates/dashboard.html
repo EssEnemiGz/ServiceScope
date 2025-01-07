@@ -23,34 +23,34 @@
             <div class="--card">
                 <div class="--inline-container --space-between --centered">
                     <h3 class="--fs-24 --bold --no-clickable">CPU Usage</h3>
-                    <p class="--fs-16 --bold --no-clickable">68.00%</p>
+                    <p class="--fs-16 --bold --no-clickable" id="cpu-amount">68.00%</p>
                 </div>
                 <canvas id="cpuUsageChart"></canvas>
             </div>
             <div class="--card">
                 <div class="--inline-container --space-between --centered">
                     <h3 class="--fs-24 --bold --no-clickable">RAM Usage</h3>
-                    <p class="--fs-16 --bold --no-clickable">8.70GB</p>
+                    <p class="--fs-16 --bold --no-clickable" id="ram-amount">8.70%</p>
                 </div>
                 <canvas id="ramUsageChart"></canvas>
             </div>
             <div class="--card">
                 <div class="--inline-container --space-between --centered">
                     <h3 class="--fs-24 --bold --no-clickable">Disk Space</h3>
-                    <p class="--fs-16 --bold --no-clickable">68.00%</p>
+                    <p class="--fs-16 --bold --no-clickable" id="disk-amount">68.00%</p>
                 </div>
                 <div class="--bar">
-                    <div class="--bar-fill" style="width: 68%;"></div>
+                    <div class="--bar-fill" id="disk-bar" style="width: 68%;"></div>
                 </div>
                 <div class="--inline-container --space-between">
-                    <p class="--font-16 --regular">685GB used</p>
-                    <p class="--font-16 --regular">1000GB total</p>
+                    <p class="--font-16 --regular" id="disk-used">685GB used</p>
+                    <p class="--font-16 --regular" id="disk-total">1000GB total</p>
                 </div>
             </div>
             <div class="--card">
                 <div class="--inline-container --space-between --centered">
-                    <h3 class="--fs-24 --bold --no-clickable">RAM Usage</h3>
-                    <p class="--fs-16 --bold --no-clickable">8.70GB</p>
+                    <h3 class="--fs-24 --bold --no-clickable">Network Activity</h3>
+                    <p class="--fs-16 --bold --no-clickable"></p>
                 </div>
                 <canvas id="networkActivityChart"></canvas>
             </div>

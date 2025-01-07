@@ -6,7 +6,8 @@ import os
 
 # Importing microservices
 import services.render as render
-import services.session as session
+import services.sessions as sessions
+import services.storage as storage
 
 load_dotenv()
 app = Flask(__name__)
@@ -22,7 +23,8 @@ CORS(app, origins=["*"])
 
 # Importing micro services
 app.register_blueprint(render.render_bp)
-app.register_blueprint(session.session_bp)
+app.register_blueprint(sessions.sessions_bp)
+app.register_blueprint(storage.storage_bp)
 
 @app.route('/')
 def hello_world():

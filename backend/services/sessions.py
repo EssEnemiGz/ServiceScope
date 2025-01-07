@@ -8,10 +8,10 @@ from werkzeug.security import generate_password_hash
 import common.db_manager as db_manager
 import common.session_manager as session_manager
 
-session_bp = Blueprint('Session Service', __name__)
+sessions_bp = Blueprint('Sessions Service', __name__)
 db = db_manager.get_db_connection()
 
-@session_bp.route("/api/session/login", methods=["POST"])
+@sessions_bp.route("/api/session/login", methods=["POST"])
 def login():
     try:
         password = request.form.get("password")
@@ -35,7 +35,7 @@ def login():
     
     return jsonify({"redirect":"/dashboard"})
     
-@session_bp.route("/api/session/register", methods=["POST"])
+@sessions_bp.route("/api/session/register", methods=["POST"])
 def register():
     cursor = db.cursor()
     try:

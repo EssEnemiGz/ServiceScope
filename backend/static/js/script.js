@@ -151,7 +151,7 @@ const networkActivityConfig = {
           color: '#b0b0c3'
         },
         beginAtZero: true,
-        max: 10000
+        max: 500
       }
     }
   }
@@ -178,31 +178,59 @@ function fetchData() {
     method: "GET",
     credentials: "include",
   })
-  .then(response => response.json())
-  .then(data => {
-    if (data.length === 0) {
-      return;
-    }
+    .then(response => response.json())
+    .then(data => {
+      if (data.length === 0) {
+        console.warn("No data received.");
+        return;
+      }
 
-    const newLabels = data.map(item => item.created_at);
-    const newDataCpu = data.map(item => item.cpu_usage);
-    const newDataRam = data.map(item => item.ram_percentage);
-    const newDataDisk = data.map(item => item.disk_usage);
+      // Extraer los datos necesarios para los gráficos
+      const newLabels = data.map(item => item.created_at);
+      const newDataCpu = data.map(item => item.cpu_usage);
+      const newDataRam = data.map(item => item.ram_percentage);
+      const newDataUpload = data.map(item => item.network_upload);
+      const newDataDownload = data.map(item => item.network_download);
+      const diskUsage = data[0]?.disk_usage || 0;
+      const diskTotalAmount = data[0]?.disk_total || 1;
 
-    cpuUsageChart.data.labels = newLabels;
-    cpuUsageChart.data.datasets[0].data = newDataCpu;
+      const cpuAmount = document.getElementById("cpu-amount");
+      const ramAmount = document.getElementById("ram-amount");
+      const diskAmount = document.getElementById("disk-amount");
 
-    ramUsageChart.data.labels = newLabels;
-    ramUsageChart.data.datasets[0].data = newDataRam;
+      cpuAmount.innerText = newDataCpu[newDataCpu.length-1]+"%";
+      ramAmount.innerText = newDataRam[newDataRam.length-1]+"%";
+      diskAmount.innerText =  ((diskUsage / diskTotalAmount) * 100).toFixed(2) + "%";
 
-    cpuUsageChart.update();
-    ramUsageChart.update();
-  })
-  .catch(error => {
-    console.error("Error fetching data:", error);
-  });
+      cpuUsageChart.data.labels = newLabels;
+      cpuUsageChart.data.datasets[0].data = newDataCpu;
+      cpuUsageChart.update();
+
+      ramUsageChart.data.labels = newLabels;
+      ramUsageChart.data.datasets[0].data = newDataRam;
+      ramUsageChart.update();
+
+      const maxUpload = Math.max(...newDataUpload);
+      const maxDownload = Math.max(...newDataDownload);
+
+      networkActivityChart.data.labels = newLabels;
+      networkActivityChart.data.datasets[0].data = newDataUpload;
+      networkActivityChart.data.datasets[1].data = newDataDownload;
+      networkActivityChart.options.scales.y.max = maxUpload+maxDownload;
+      networkActivityChart.update();
+
+      const diskBar = document.getElementById("disk-bar");
+      const diskUsed = document.getElementById("disk-used");
+      const diskTotal = document.getElementById("disk-total");
+
+      diskBar.style.width = Math.round((diskUsage / diskTotalAmount) * 100) + "%";
+      diskUsed.innerText = diskUsage + "GB";
+      diskTotal.innerText = diskTotalAmount + "GB"
+    })
+    .catch(error => {
+      console.error("Error fetching data:", error);
+    });
 }
 
-fetchData()
-
+fetchData();
 setInterval(fetchData, 5000);

@@ -1,6 +1,7 @@
 import requests
 import logging
 import psutil
+import shutil
 import daemon
 import json
 import time
@@ -25,33 +26,40 @@ def make_request(url, method, **kwargs):
         response = requests.request(method, url, **kwargs)
         return response
     except requests.RequestException as e:
-        print(f"Error al realizar la solicitud: {e}")
-        return None
+        logging.error(f"Error al realizar la solicitud: {e}")
+        return 500
 
 def check_status(url, method="GET", **kwargs):
     try:
         r = make_request(url, method, **kwargs)
-        data = {
-            "service":url,
-            "response_time":r.elapsed.total_seconds(),
-            "status_code":r.status_code
+        if r is None:
+            return None
+        return {
+            "url": url,
+            "method": method,
+            "headers": kwargs.get("headers", {}),
+            "params": kwargs.get("params", {}),
+            "data": kwargs.get("data", {}),
+            "json_payload": kwargs.get("json", {}),
+            "response_time": r.elapsed.total_seconds(),
+            "status_code": r.status_code,
         }
-        return data
     except Exception as e:
-        logging.error(e)
-        return -1
+        logging.error(f"Error al verificar el estado: {e}")
+        return None
 
 def main():
     while 1:
         f = open(f"{actual_dir}/config.json", "r")
         data = json.loads(f.read())
         f.close()
-
+        
         logs = {
             "routes":[],
             "cpu":0,
             "ram_percentege":0,
-            "ram_gb":0
+            "ram_gb":0,
+            "user_email":data.get("user_email", "")
         }
 
         routes = data.get("routes", [])
@@ -82,11 +90,29 @@ def main():
         memory_info = psutil.virtual_memory()
         memory_usage = memory_info.percent
         memory_gb = memory_info.used / (1024 ** 3)
+        net_io = psutil.net_io_counters()
+        network_upload = net_io.bytes_sent / (1024 ** 2)
+        network_download = net_io.bytes_recv / (1024 ** 2)
+
+        total, used, free = shutil.disk_usage("/")
+        disk_total = total / (1024 ** 3)
+        disk_used = used / (1024 ** 3)
 
         logs["cpu"] = cpu_usage
-        logs["ram_percentege"] = memory_usage
+        logs["ram_percentage"] = memory_usage
         logs["ram_gb"] = f"{memory_gb:.2f}"
+        logs["disk_total"] = round(disk_total, 2)
+        logs["disk_used"] = round(disk_used, 2)
+        logs["network_upload"] = round(network_upload, 2)
+        logs["network_download"] = round(network_download, 2)
         logging.info(logs)
+        
+        response = requests.post("http://127.0.0.1:5555/api/storage/add", headers={"Content-Type":"application/json"}, json=logs)
+        if response == 500:
+            logging.error("Falló el envío de los datos al servidor, código de estado: Desconocido", "Información recibida: VACIO")
+        elif response.status_code != 200:
+            logging.error("Falló el envío de los datos al servidor, código de estado: ", response.status_code, "Información recibida: ", response.text)
+            
         time.sleep(10)
 
 with daemon.DaemonContext(stderr=open('error.log', 'w+')):
